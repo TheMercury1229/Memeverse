@@ -4,7 +4,6 @@ import { ImageKitProvider } from "imagekitio-next";
 
 export const Providers = ({children}: {children: React.ReactNode}) => { 
 const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
-console.log(publicKey);
 const authenticator = async () => {
   try {
     const response = await fetch("http://localhost:3000/api/auth");

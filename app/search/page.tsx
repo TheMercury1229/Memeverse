@@ -1,16 +1,9 @@
-import ImageKit from "imagekit";
 import { unstable_noStore } from "next/cache";
 import { ResultList } from "../_components/ResultList";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { UploadMemeButton } from "../_components/UploadMemeButton";
+import { imagekit } from "../lib/imageKit";
 
 
-const imagekit = new ImageKit({
-  publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
-  privateKey: process.env.PRIVATE_KEY!,
-  urlEndpoint: process.env.NEXT_PUBLIC_URL_ENDPOINT!,
-});
 export default async function SearchPage({
   searchParams,
 }: {
@@ -29,7 +22,6 @@ export default async function SearchPage({
             <h1 className="text-2xl lg:text-4xl font-bold">Search Results</h1>
             <UploadMemeButton />
         </div>
-
       <ResultList results={results} />
     </div>
   );
