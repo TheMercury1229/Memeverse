@@ -46,10 +46,10 @@ To run **Memeverse** locally, follow these steps:
 
 1. **Clone the repository**:
 
-    \`\`\`bash
+    \\\`bash
    git clone https://github.com/TheMercury1229/memeverse
    cd memeverse
-   \`\`\`
+   \\\
 
 3. **Install dependencies**:
 
