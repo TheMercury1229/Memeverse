@@ -45,19 +45,22 @@ The application can be accessed at [Memeverse](https://memeverse-two.vercel.app)
 To run **Memeverse** locally, follow these steps:
 
 1. **Clone the repository**:
-   \`\`\`bash
+
+    \`\`\`bash
    git clone https://github.com/TheMercury1229/memeverse
    cd memeverse
    \`\`\`
 
-2. **Install dependencies**:
-   \`\`\`bash
+3. **Install dependencies**:
+
+    \`\`\`bash
    npm install
    \`\`\`
 
-3. **Create an environment file**:
+4. **Create an environment file**:
    Create a \`.env\` file in the root directory and add your environment variables for **NextAuth**, **ImageKit**, and **Drizzle** configuration. For example:
-   \`\`\`bash
+
+    \`\`\`bash
    NEXT_PUBLIC_PUBLIC_KEY=YOUR_IMAGEKIT_PUBLIC_KEY
    PRIVATE_KEY=YOUR_IMAGEKIT_PRIVATE_KEY
    NEXT_PUBLIC_URL_ENDPOINT=YOUR_IMAGEKIT_PUBLIC_ENDPOINT
@@ -67,8 +70,9 @@ To run **Memeverse** locally, follow these steps:
    AUTH_GOOGLE_SECRET=YOUR_GOOGLE_CLIENT_SECRET
    \`\`\`
 
-4. **Run the development server**:
-   \`\`\`bash
+6. **Run the development server**:
+
+    \`\`\`bash
    npm run dev
    \`\`\`
 
