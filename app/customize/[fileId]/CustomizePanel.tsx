@@ -8,22 +8,23 @@ import { Button } from "@/components/ui/button";
 import { debounce } from "lodash";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Heart } from "lucide-react";
+import { Download } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { favoriteMemeAction } from "./actions";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
+import { FavoriteButton } from "@/app/_components/FavoriteButton";
 
 export function CustomizePanel({
   file,
   isFavorited,
+  isAuthenticated,
 }: {
   file: Pick<FileObject, "filePath" | "name" | "fileId">;
   isFavorited: boolean;
+  isAuthenticated: boolean;
 }) {
   const [textTransformation, setTextTransformations] = useState<
     Record<string, { raw: string }>
@@ -32,15 +33,7 @@ export function CustomizePanel({
   const [blur, setBlur] = useState(false);
   const [sharpen, setSharpen] = useState(false);
   const [grayscale, setGrayscale] = useState(false);
-  const [isFavoritedState, setIsFavoritedState] = useState(isFavorited);
 
-  const handleFavoriteToggle = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    e.preventDefault();
-    await favoriteMemeAction(file.fileId);
-    setIsFavoritedState((prev) => !prev);
-  };
   const textTransformationsArray = Object.values(textTransformation);
 
   const onUpdate = useCallback(
@@ -97,24 +90,14 @@ export function CustomizePanel({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <form onClick={(e: any) => handleFavoriteToggle(e)}>
-                  <Button type="submit" variant={"outline"} size={"icon"}>
-                    {isFavoritedState ? (
-                      <HeartFilledIcon className="size-8" />
-                    ) : (
-                      <Heart className="size-8" />
-                    )}
-                  </Button>
-                </form>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{isFavoritedState ? "Unfavorite" : "Favorite"}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {isAuthenticated && (
+            <FavoriteButton
+              isFavorited={isFavorited}
+              fileId={file.fileId}
+              filePath={file.filePath}
+              pathToRevalidate={`/customize/${file.fileId}`}
+            />
+          )}
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

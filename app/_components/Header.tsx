@@ -32,14 +32,14 @@ export async function Header() {
         >
           Browse
         </Link>
-        {/* {session && (
+        {session && (
           <Link
             href="/favorites"
             className="text-muted-foreground hover:text-foreground"
           >
             Favorites
           </Link>
-        )} */}
+        )}
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -64,14 +64,14 @@ export async function Header() {
               Browse
             </Link>
 
-            {/* {session && (
+            {session && (
               <Link
                 href="/favorites"
                 className="text-muted-foreground hover:text-foreground"
               >
                 Favorites
               </Link>
-            )} */}
+            )}
           </nav>
         </SheetContent>
       </Sheet>
