@@ -5,18 +5,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ModeToggle } from "./ModeToggle";
 import { SearchInput } from "./SearchInput";
-// import { SearchInput } from "./search-input";
-// import { auth, signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 
 export async function Header() {
-//   const session = await auth();
+  const session = await auth();
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-10">
@@ -89,11 +87,12 @@ export async function Header() {
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <SearchInput />
-            <Button className="absolute right-0 top-0" type="submit">Search</Button>
+            <Button className="absolute right-0 top-0" type="submit">
+              Search
+            </Button>
           </div>
         </form>
         <ModeToggle />
-
         <AccountMenu />
       </div>
     </header>
@@ -101,20 +100,20 @@ export async function Header() {
 }
 
 async function AccountMenu() {
-//   const session = await auth();
+  const session = await auth();
 
-// //   if (!session) {
-// //     return (
-// //       <form
-// //         action={async () => {
-// //           "use server";
-// //         //   await signIn();
-// //         }}
-//       >
-//         <Button type="submit">Sign in</Button>
-//       </form>
-//     );
-//   }
+  if (!session) {
+    return (
+      <form
+        action={async () => {
+          "use server";
+          await signIn();
+        }}
+      >
+        <Button type="submit">Sign in</Button>
+      </form>
+    );
+  }
 
   return (
     <DropdownMenu>
@@ -129,7 +128,7 @@ async function AccountMenu() {
           <form
             action={async () => {
               "use server";
-            //   await signOut();
+              await signOut();
             }}
           >
             <button type="submit">Sign out</button>
