@@ -5,15 +5,9 @@ import {
   text,
   primaryKey,
   integer,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
-import postgres from "postgres";
-import { drizzle } from "drizzle-orm/postgres-js";
 import type { AdapterAccountType } from "next-auth/adapters";
-
-const connectionString = process.env.DATABASE_URL!;
-const pool = postgres(connectionString, { max: 1 });
-
-export const db = drizzle(pool);
 
 export const users = pgTable("user", {
   id: text("id")
@@ -91,6 +85,7 @@ export const authenticators = pgTable(
     }),
   })
 );
+
 export const favorites = pgTable("favorite", {
   id: text("id")
     .primaryKey()
@@ -101,5 +96,19 @@ export const favorites = pgTable("favorite", {
   memeId: text("memeId").notNull(),
   filePath: text("filePath").notNull(),
 });
+
+export const favoriteCounts = pgTable(
+  "favorite_count",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    memeId: text("memeId").notNull(),
+    count: integer("count").notNull().default(0),
+  },
+  (table) => ({
+    memeIdUniqueIndex: uniqueIndex("memeIdUniqueIndex").on(table.memeId), // Ensure unique index exists
+  })
+);
 
 export type Favorite = typeof favorites.$inferSelect;

@@ -1,31 +1,51 @@
 "use server";
 
 import { db } from "@/app/db/db";
-import { favorites } from "@/app/db/schema";
+import { favoriteCounts, favorites } from "@/app/db/schema";
 import { currentUser } from "@/app/lib/auth-utils";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export const favoriteMemeAction = async (
+export async function favoriteMemeAction(
   fileId: string,
   filePath: string,
   pathToRevalidate: string
-) => {
-  const user = await currentUser();
+) {
+  const userId = await currentUser();
+
   const favorite = await db.query.favorites.findFirst({
-    where: and(eq(favorites.userId, user), eq(favorites.memeId, fileId)),
+    where: and(eq(favorites.userId, userId), eq(favorites.memeId, fileId)),
   });
+
   if (favorite) {
     await db
       .delete(favorites)
-      .where(and(eq(favorites.userId, user), eq(favorites.memeId, fileId)));
-    return;
+      .where(and(eq(favorites.userId, userId), eq(favorites.memeId, fileId)));
+    await db
+      .update(favoriteCounts)
+      .set({
+        count: sql`${favoriteCounts.count} - 1`,
+      })
+      .where(eq(favoriteCounts.memeId, fileId));
   } else {
     await db.insert(favorites).values({
-      userId: user,
+      userId,
       memeId: fileId,
       filePath: filePath,
     });
+    await db
+      .insert(favoriteCounts)
+      .values({
+        memeId: fileId,
+        count: 1,
+      })
+      .onConflictDoUpdate({
+        set: {
+          count: sql`${favoriteCounts.count} + 1`,
+        },
+        target: favoriteCounts.memeId, // Ensure this column has a unique constraint
+      });
   }
+
   revalidatePath(pathToRevalidate);
-};
+}
