@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import { CircleUser, FilePen, Menu, Package2, Search } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ModeToggle } from "./ModeToggle";
@@ -23,7 +23,7 @@ export async function Header() {
           href="#"
           className="flex items-center gap-2 text-lg font-semibold md:text-base"
         >
-          <Package2 className="h-6 w-6" />
+          <FilePen className="h-6 w-6" />
           <span className="sr-only">Memeverse</span>
         </Link>
         <Link
@@ -54,7 +54,7 @@ export async function Header() {
               href="#"
               className="flex items-center gap-2 text-lg font-semibold"
             >
-              <Package2 className="h-6 w-6" />
+              <FilePen className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </Link>
             <Link

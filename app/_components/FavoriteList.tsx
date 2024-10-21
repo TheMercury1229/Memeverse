@@ -13,7 +13,7 @@ export function FavoritesList({ favorites }: { favorites: Favorite[] }) {
     console.log(favorites);
   }, [favorites]);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       {favorites.map((favorite) => (
         <Card key={favorite.memeId}>
           <CardContent className="p-3 flex flex-col items-center gap-3">
@@ -21,8 +21,8 @@ export function FavoritesList({ favorites }: { favorites: Favorite[] }) {
               key={favorite.memeId}
               path={favorite.filePath}
               alt={"a meme"}
-              width={200}
-              height={200}
+              width={250}
+              height={250}
             />
           </CardContent>
           <CardFooter className="flex justify-between mt-2">
