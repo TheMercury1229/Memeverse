@@ -24,6 +24,7 @@ export const UploadMemeButton = () => {
     setIsLoading(true);
     e.preventDefault();
     uploadInputRef.current?.click();
+    console.log("uploading");
   };
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState("");
@@ -106,8 +107,7 @@ export const UploadMemeButton = () => {
   );
 };
 
-
-function Spinner(){
+function Spinner() {
   return (
     <svg
       className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
