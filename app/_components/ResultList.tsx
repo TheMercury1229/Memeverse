@@ -41,6 +41,7 @@ export const ResultList = ({
               path={file.filePath}
               alt={file.name}
               width={250}
+              className="object-contain"
               height={250}
             />
           </CardContent>
