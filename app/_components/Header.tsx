@@ -55,7 +55,6 @@ export async function Header() {
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <FilePen className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
             </Link>
             <Link
               href="/search?q="
