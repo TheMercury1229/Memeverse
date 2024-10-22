@@ -20,31 +20,30 @@ export default async function SearchPage({
     tags: `${searchParams.q}`,
   });
   const favoritesCount = await getFavoriteCounts(results.map((r) => r.fileId));
-  if (results.length === 0) {
-    return (
-      <div className="px-4 container mx-auto space-y-8 py-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl lg:text-4xl font-bold">Search Results</h1>
-          <UploadMemeButton />
-        </div>
-        {results.length === 0 && (
-          <Card className="py-8 flex flex-col items-center justify-center gap-4">
-            <Image
-              src="/empty.svg"
-              width="200"
-              height="200"
-              alt="an empty state image"
-            />
-            <p>No memes found! Try searching anything else</p>
-            <Button asChild>
-              <Link href="/search?q=">Find some Memes</Link>
-            </Button>
-          </Card>
-        )}
-        {results.length > 0 && (
-          <ResultList results={results} counts={favoritesCount} />
-        )}
+
+  return (
+    <div className="px-4 container mx-auto space-y-8 py-8">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl lg:text-4xl font-bold">Search Results</h1>
+        <UploadMemeButton />
       </div>
-    );
-  }
+      {results.length === 0 && (
+        <Card className="py-8 flex flex-col items-center justify-center gap-4">
+          <Image
+            src="/empty.svg"
+            width="200"
+            height="200"
+            alt="an empty state image"
+          />
+          <p>No memes found! Try searching anything else</p>
+          <Button asChild>
+            <Link href="/search?q=">Find some Memes</Link>
+          </Button>
+        </Card>
+      )}
+      {results.length > 0 && (
+        <ResultList results={results} counts={favoritesCount} />
+      )}
+    </div>
+  );
 }
