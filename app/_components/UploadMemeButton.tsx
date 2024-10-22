@@ -78,15 +78,15 @@ export const UploadMemeButton = () => {
                 displayName,
               }}
               onSuccess={(success: any) => {
-                router.push(`/customize/${success.fileId}`);
                 setIsLoading(false);
+                router.push(`/customize/${success.fileId}`);
               }}
               accept="image/*"
               style={{ display: "none" }}
               ref={uploadInputRef}
             />
           </div>
-          <DialogFooter className="flex justify-between">
+          <DialogFooter className="flex justify-between gap-3">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
                 Close
