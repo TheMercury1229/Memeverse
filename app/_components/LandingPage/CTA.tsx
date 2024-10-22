@@ -22,7 +22,7 @@ export function CTA() {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <Button className="rounded-full px-10 py-7 text-xl" asChild>
-            <Link href="/search?q=0" className="flex items-center">
+            <Link href="/search?q=" className="flex items-center">
               <span className="font-semibold">Get Started</span>
               <ArrowRight size={30} />
             </Link>
