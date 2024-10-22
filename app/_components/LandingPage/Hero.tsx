@@ -18,7 +18,7 @@ export const Hero = () => {
         </p>
         <div>
           <Button className="rounded-full px-10 py-7 text-xl" asChild>
-            <Link href="/search/q=0" className="flex items-center">
+            <Link href="/search?q=0" className="flex items-center">
               <span className="font-semibold">Get Started</span>
               <ArrowRight size={30} />
             </Link>
