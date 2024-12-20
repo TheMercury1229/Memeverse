@@ -38,7 +38,7 @@ Welcome to **Memeverse**, a web application that lets users create and edit meme
 
 ## Live Link
 
-The application can be accessed at [Memeverse](https://memeverse-two.vercel.app)
+The application can be accessed at [Memeverse](https://memeverse-three-phi.vercel.app/)
 
 ## Installation
 
