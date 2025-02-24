@@ -14,20 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IKUpload } from "imagekitio-next";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export const UploadMemeButton = () => {
-  const uploadInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [displayName, setDisplayName] = useState("");
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
-    e.preventDefault();
-    uploadInputRef.current?.click();
-    console.log("uploading");
-  };
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState("");
+  const [selectedFile, setSelectedFile] = useState(false); // Track if a file is selected
 
   return (
     <Dialog>
@@ -38,13 +32,12 @@ export const UploadMemeButton = () => {
         <DialogHeader>
           <DialogTitle>Upload Your Base Meme Image</DialogTitle>
           <DialogDescription>
-            This is the image that other users on the site can build on memes.
+            This is the image that other users on the site can build memes on.
           </DialogDescription>
         </DialogHeader>
-        <form action="" className="flex flex-col gap-8" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              {" "}
               <Label htmlFor="displayName">Display Name</Label>
               <Input
                 id="displayName"
@@ -60,32 +53,42 @@ export const UploadMemeButton = () => {
               <Input
                 id="tags"
                 name="tags"
-                placeholder="A comma separated list of tags"
+                placeholder="A comma-separated list of tags"
                 required
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
               />
             </div>
 
-            <IKUpload
-              fileName={`${displayName}-${Date.now()}`}
-              onError={(error: any) => {
-                console.log("error", error);
-                setIsLoading(false);
-              }}
-              tags={[...tags.split(","), displayName]}
-              customMetadata={{
-                displayName,
-              }}
-              onSuccess={(success: any) => {
-                setIsLoading(false);
-                router.push(`/customize/${success.fileId}`);
-              }}
-              accept="image/*"
-              style={{ display: "none" }}
-              ref={uploadInputRef}
-            />
+            {/* Contained Upload Box */}
+            <div className="border-2 border-dashed border-gray-400 p-6 rounded-lg text-center cursor-pointer hover:border-gray-600 transition relative">
+              <p className="text-gray-500 pointer-events-none">
+                {isLoading
+                  ? "Uploading..."
+                  : selectedFile
+                  ? "File Selected"
+                  : "Click or Drag & Drop to Upload"}
+              </p>
+              <IKUpload
+                fileName={`${displayName}-${Date.now()}`}
+                onError={(error: any) => {
+                  console.log("error", error);
+                  setIsLoading(false);
+                }}
+                tags={[...tags.split(","), displayName]}
+                customMetadata={{ displayName }}
+                onSuccess={(success: any) => {
+                  setIsLoading(false);
+                  router.push(`/customize/${success.fileId}`);
+                }}
+                accept="image/*"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                onChange={() => setSelectedFile(true)} // Detect when a file is selected
+              />
+            </div>
           </div>
+
+          {/* Submit Button */}
           <DialogFooter className="flex justify-between gap-3">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
@@ -93,10 +96,9 @@ export const UploadMemeButton = () => {
               </Button>
             </DialogClose>
             <Button
-              disabled={isLoading}
-              type="submit"
+              disabled={!selectedFile || isLoading} // Disable if no file selected
               className="flex items-center gap-2"
-              asChild
+              onClick={() => setIsLoading(true)}
             >
               {isLoading ? <Spinner /> : <span>Select Image and Upload</span>}
             </Button>
@@ -107,6 +109,7 @@ export const UploadMemeButton = () => {
   );
 };
 
+// Loading Spinner Component
 function Spinner() {
   return (
     <svg
