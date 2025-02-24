@@ -6,7 +6,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
   const authenticator = async () => {
     try {
-      const response = await fetch(`https://memeverse-two.vercel.app/api/auth`);
+      const response = await fetch(`https://memeverse-three-phi.vercel.app/api/auth`);
 
       if (!response.ok) {
         const errorText = await response.text();
